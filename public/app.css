@@ -1,0 +1,14 @@
+table.grid {
+}
+
+table.grid tr:nth-child(even) {
+    background-color: #efefef;
+}
+
+table.grid tr:nth-child(odd) {
+    background-color: #f6f6f6;
+}
+
+table.grid tr td.error {
+    background-color: #fee;
+}

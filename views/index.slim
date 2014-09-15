@@ -1,0 +1,41 @@
+doctype html
+
+html
+  head
+    link rel="stylesheet" type="text/css" href="app.css"
+    script src="angular.min.js"
+    script src="jquery-1.11.1.min.js"
+    script src="app.js"
+
+  body ng-app="flexyjunior" ng-controller="FlexyjuniorCtrl"
+    ul
+      li ng-repeat="tableName in tableNames"
+        a href="\#{{tableName}}" ng-click="selectTable(tableName)"
+          | {{tableName}}
+
+    a href="javascript: void(0)" ng-click="addNewRow()" ng-if="table" Add Row
+
+    table.grid ng-if="table"
+      tr
+        th ng-repeat="field in table.fields"
+          | {{field}}({{table.schema[field].type}})
+
+      tr ng-repeat="row in rows"
+
+        td (
+          ng-repeat="field in table.fields"
+          ng-dblclick="showCellInput(row, field)"
+          ng-class="{error: row.errors[field]}"
+        )
+          input (
+            ng-model="row[field]"
+            ng-if="row.inputFor == field"
+            ng-blur="hideCellInput(row, field)"
+            ng-change="fieldChanged(row, field)"
+          )
+          span ng-if="row.inputFor != field" {{row[field]}}
+
+        td
+          a href="javascript: void(0)" ng-click="saveRow(row)" ng-if="row.changed" save
+          '
+          a href="javascript: void(0)" ng-click="deleteRow(row)" ng-if="row.id" delete
